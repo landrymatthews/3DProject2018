@@ -12,6 +12,8 @@
     <input type="radio" name="difficulty" id="hard" > HARD </input>
     <input type="radio" name="difficulty" id="extreme" > EXTREME </input>
     <Button id="Hint" type="button">Hint</Button>
+    <Button id="save-btn" type="button">Save puzzle</Button>
+    <Button id="load-btn" type="button">Load puzzle</Button>  
 
 
     <style>
@@ -330,7 +332,19 @@
                 David Reedy, Landry LastName
      */
 
+document.getElementById('load-btn').onclick = function load (){
 
+        var xs=[];
+        var ys=[];
+        var points = document.cookie.split('/');
+        for (var j=0; j<points.length; j++) {
+            var xy = points[j].split(',');
+            xs.push(xy[0]);
+            ys.push(xy[1]);
+
+        }
+        window.alert(xs);
+    }
 
     function sleep(miliseconds) {
         var currentTime = new Date().getTime();
@@ -477,6 +491,13 @@
 
                 const dragControls = new THREE.DragControls(objects, camera, renderer.domElement);
 
+                
+  	            document.getElementById('save-btn').onclick = function save (){
+                    document.cookie="";
+                    for (var i=0; i<numPieces; i++) {
+                        document.cookie = document.cookie + objects[i].position.x + "," + objects[i].position.y + "/; expires=Fri, 31 Dec 9999 23:59:59 GMT";
+                    }
+                }
 
                 // var xAxis = new THREE.Vector3(0,0,1);
                 //object.rotateAround(xAxis, Math.PI/180);
